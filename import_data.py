@@ -1,7 +1,7 @@
 import csv
 from datetime import datetime
-from database import SessionLocal, engine, Base
-from models import Weather, WindDirection
+from database import SessionLocal
+from models import Weather, WindDirection, WindData  # Додали WindData
 from repository import WeatherRepository
 
 
@@ -28,22 +28,30 @@ def parse_csv_and_import(file_path: str):
 
                 weather = Weather(
                     country=row['country'],
+                    last_updated=parsed_date,
+                    sunrise=parsed_sunrise
+                )
+
+                wind_info = WindData(
                     wind_degree=int(row['wind_degree']),
                     wind_kph=float(row['wind_kph']),
                     wind_direction=wind_dir_enum,
-                    last_updated=parsed_date,
-                    sunrise=parsed_sunrise,
                     wind_mph=float(row['wind_mph']),
                     gust_kph=float(row['gust_kph']),
                     gust_mph=float(row['gust_mph'])
                 )
+
+                weather.wind_info = wind_info
+
                 weather_records.append(weather)
 
         repo.bulk_save(weather_records)
         print(f"Успішно імпортовано {len(weather_records)} записів.")
 
     except Exception as e:
+        import traceback
         print(f"Помилка під час імпорту: {e}")
+        traceback.print_exc()
         session.rollback()
     finally:
         session.close()

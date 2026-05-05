@@ -8,7 +8,7 @@ class WeatherRepository:
         self.session = session
 
     def bulk_save(self, weather_records: list[Weather]):
-        self.session.bulk_save_objects(weather_records)
+        self.session.add_all(weather_records)
         self.session.commit()
 
     def get_all_wind_data(self) -> list[WindData]:

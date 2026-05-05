@@ -12,7 +12,9 @@ pwd = os.environ.get('pwd')
 port_id = str(os.environ.get('port_id'))
 
 
-DATABASE_URL = f"postgresql+psycopg2://{username}:{pwd}@{hostname}:{port_id}/{database}"
+# DATABASE_URL = f"postgresql+psycopg2://{username}:{pwd}@{hostname}:{port_id}/{database}"
+
+DATABASE_URL = f"mysql+pymysql://{username}:{pwd}@{hostname}:{port_id}/{database}"
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

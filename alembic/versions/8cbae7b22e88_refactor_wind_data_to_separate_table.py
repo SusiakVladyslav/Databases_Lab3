@@ -40,7 +40,7 @@ def upgrade() -> None:
     op.execute(
         """
         INSERT INTO wind_data (weather_id, wind_degree, wind_kph, wind_direction, wind_mph, gust_kph, gust_mph)
-        SELECT id, wind_degree, wind_kph, wind_direction::winddirection, wind_mph, gust_kph, gust_mph
+        SELECT id, wind_degree, wind_kph, wind_direction, wind_mph, gust_kph, gust_mph
         FROM weather_data;
         """
     )
