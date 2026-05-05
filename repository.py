@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 from models import Weather, WindData
+from datetime import date
 
 
 class WeatherRepository:
@@ -15,3 +16,9 @@ class WeatherRepository:
 
     def commit_changes(self):
         self.session.commit()
+
+    def get_weather_by_country_and_date(self, country_name: str, target_date: date):
+        return self.session.query(Weather).filter(
+            Weather.country.ilike(f"%{country_name}%"),
+            Weather.last_updated == target_date
+        ).all()
