@@ -1,5 +1,5 @@
 import enum
-from sqlalchemy import Column, Integer, Float, String, Date, Time, Enum, ForeignKey
+from sqlalchemy import Column, Integer, Float, String, Date, Time, Enum, ForeignKey, Boolean
 from sqlalchemy.orm import relationship
 from database import Base
 
@@ -36,6 +36,8 @@ class WindData(Base):
     wind_mph = Column(Float, nullable=True)
     gust_kph = Column(Float, nullable=True)
     gust_mph = Column(Float, nullable=True)
+
+    should_go_out = Column(Boolean, nullable=True)
 
     weather = relationship("Weather", back_populates="wind_info")
 
